@@ -45,4 +45,5 @@ defmodule TodolistWeb.Endpoint do
   plug Plug.Head
   plug Plug.Session, @session_options
   plug TodolistWeb.Router
+  plug CORSPlug, origin: "*"
 end
