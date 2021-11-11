@@ -7,7 +7,10 @@ config :time_manager, Todolist.Repo,
   database: "time_manager_dev",
   hostname: "localhost",
   show_sensitive_data_on_connection_error: true,
-  pool_size: 10
+  pool_size: 10,
+  encodageMDP: "a"
+
+config :joken, default_signer: "aym2y57dkJJ53H79vE39KZ8LN639Y7Lnjg6zRYbMvH2CtebSs5"
 
 # For development, we disable any cache and enable
 # debugging and code reloading.
@@ -22,7 +25,7 @@ config :time_manager, TodolistWeb.Endpoint,
   check_origin: false,
   code_reloader: true,
   debug_errors: true,
-  secret_key_base: "6akdoJiFJSPidlNhp3eqEpRgsy6MIqCvHtjHuCar8bofHg6LGpYeOG8U5M20Zrq1",
+  secret_key_base: "iVQN8cg82xcGyRfaUXUemIgnGSDq+fSxvbPA+5gqIqRwx9szB+vR5YxoMA1L5NJv",
   watchers: []
 
 # ## SSL Support

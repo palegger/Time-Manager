@@ -7,7 +7,7 @@ defmodule TodolistWeb.Endpoint do
   @session_options [
     store: :cookie,
     key: "_time_manager_key",
-    signing_salt: "NZfGO9Jb"
+    signing_salt: "+Nr1fgSp"
   ]
 
   socket "/live", Phoenix.LiveView.Socket, websocket: [connect_info: [session: @session_options]]
@@ -45,5 +45,4 @@ defmodule TodolistWeb.Endpoint do
   plug Plug.Head
   plug Plug.Session, @session_options
   plug TodolistWeb.Router
-  plug CORSPlug, origin: "*"
 end

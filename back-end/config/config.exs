@@ -16,7 +16,7 @@ config :time_manager, TodolistWeb.Endpoint,
   url: [host: "localhost"],
   render_errors: [view: TodolistWeb.ErrorView, accepts: ~w(json), layout: false],
   pubsub_server: Todolist.PubSub,
-  live_view: [signing_salt: "1TvqU1mo"]
+  live_view: [signing_salt: "3NrgWxzy"]
 
 # Configures the mailer
 #

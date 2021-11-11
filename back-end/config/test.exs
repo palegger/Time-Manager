@@ -17,7 +17,7 @@ config :time_manager, Todolist.Repo,
 # you can enable the server option below.
 config :time_manager, TodolistWeb.Endpoint,
   http: [ip: {127, 0, 0, 1}, port: 4002],
-  secret_key_base: "Wd4KL6fT72EeuVCv6kYXhMJOgmDYB9cM/vR+QDCK6geidvrY4HxG4BYB6186OGyc",
+  secret_key_base: "XLtLhiMFxK9kOtT5pXMoOdBRUAQ8WZf3wdZJN5miCIQ3ITXEBHNNcYyAefuvX0X4",
   server: false
 
 # In test we don't send emails.

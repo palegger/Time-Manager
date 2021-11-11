@@ -50,8 +50,9 @@ defmodule Todolist.Schema do
 
   """
   def create_user(attrs \\ %{}) do
+    new_attr = Map.replace(attrs, "password", Pbkdf2.Base.hash_password(get_in(attrs, ["password"]), "a"))
     %User{}
-    |> User.changeset(attrs)
+    |> User.changeset(new_attr)
     |> Repo.insert()
   end
 
@@ -196,102 +197,6 @@ defmodule Todolist.Schema do
   """
   def change_team(%Team{} = team, attrs \\ %{}) do
     Team.changeset(team, attrs)
-  end
-
-  alias Todolist.Schema.Teamuser
-
-  @doc """
-  Returns the list of teamusers.
-
-  ## Examples
-
-      iex> list_teamusers()
-      [%Teamuser{}, ...]
-
-  """
-  def list_teamusers do
-    Repo.all(Teamuser)
-  end
-
-  @doc """
-  Gets a single teamuser.
-
-  Raises `Ecto.NoResultsError` if the Teamuser does not exist.
-
-  ## Examples
-
-      iex> get_teamuser!(123)
-      %Teamuser{}
-
-      iex> get_teamuser!(456)
-      ** (Ecto.NoResultsError)
-
-  """
-  def get_teamuser!(id), do: Repo.get!(Teamuser, id)
-
-  @doc """
-  Creates a teamuser.
-
-  ## Examples
-
-      iex> create_teamuser(%{field: value})
-      {:ok, %Teamuser{}}
-
-      iex> create_teamuser(%{field: bad_value})
-      {:error, %Ecto.Changeset{}}
-
-  """
-  def create_teamuser(attrs \\ %{}) do
-    %Teamuser{}
-    |> Teamuser.changeset(attrs)
-    |> Repo.insert()
-  end
-
-  @doc """
-  Updates a teamuser.
-
-  ## Examples
-
-      iex> update_teamuser(teamuser, %{field: new_value})
-      {:ok, %Teamuser{}}
-
-      iex> update_teamuser(teamuser, %{field: bad_value})
-      {:error, %Ecto.Changeset{}}
-
-  """
-  def update_teamuser(%Teamuser{} = teamuser, attrs) do
-    teamuser
-    |> Teamuser.changeset(attrs)
-    |> Repo.update()
-  end
-
-  @doc """
-  Deletes a teamuser.
-
-  ## Examples
-
-      iex> delete_teamuser(teamuser)
-      {:ok, %Teamuser{}}
-
-      iex> delete_teamuser(teamuser)
-      {:error, %Ecto.Changeset{}}
-
-  """
-  def delete_teamuser(%Teamuser{} = teamuser) do
-    Repo.delete(teamuser)
-  end
-
-  @doc """
-  Returns an `%Ecto.Changeset{}` for tracking teamuser changes.
-
-  ## Examples
-
-      iex> change_teamuser(teamuser)
-      %Ecto.Changeset{data: %Teamuser{}}
-
-  """
-  def change_teamuser(%Teamuser{} = teamuser, attrs \\ %{}) do
-    Teamuser.changeset(teamuser, attrs)
   end
 
   alias Todolist.Schema.Workingtime
@@ -484,5 +389,109 @@ defmodule Todolist.Schema do
   """
   def change_clock(%Clock{} = clock, attrs \\ %{}) do
     Clock.changeset(clock, attrs)
+  end
+
+  alias Todolist.Schema.Teamuser
+
+  @doc """
+  Returns the list of teamusers.
+
+  ## Examples
+
+      iex> list_teamusers()
+      [%Teamuser{}, ...]
+
+  """
+  def list_teamusers do
+    Repo.all(Teamuser)
+  end
+
+  @doc """
+  Gets a single teamuser.
+
+  Raises `Ecto.NoResultsError` if the Teamuser does not exist.
+
+  ## Examples
+
+      iex> get_teamuser!(123)
+      %Teamuser{}
+
+      iex> get_teamuser!(456)
+      ** (Ecto.NoResultsError)
+
+  """
+  def get_teamuser!(id), do: Repo.get!(Teamuser, id)
+
+  @doc """
+  Creates a teamuser.
+
+  ## Examples
+
+      iex> create_teamuser(%{field: value})
+      {:ok, %Teamuser{}}
+
+      iex> create_teamuser(%{field: bad_value})
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def create_teamuser(attrs \\ %{}) do
+    %Teamuser{}
+    |> Teamuser.changeset(attrs)
+    |> Repo.insert()
+  end
+
+  @doc """
+  Updates a teamuser.
+
+  ## Examples
+
+      iex> update_teamuser(teamuser, %{field: new_value})
+      {:ok, %Teamuser{}}
+
+      iex> update_teamuser(teamuser, %{field: bad_value})
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def update_teamuser(%Teamuser{} = teamuser, attrs) do
+    teamuser
+    |> Teamuser.changeset(attrs)
+    |> Repo.update()
+  end
+
+  @doc """
+  Deletes a teamuser.
+
+  ## Examples
+
+      iex> delete_teamuser(teamuser)
+      {:ok, %Teamuser{}}
+
+      iex> delete_teamuser(teamuser)
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def delete_teamuser(%Teamuser{} = teamuser) do
+    Repo.delete(teamuser)
+  end
+
+  @doc """
+  Returns an `%Ecto.Changeset{}` for tracking teamuser changes.
+
+  ## Examples
+
+      iex> change_teamuser(teamuser)
+      %Ecto.Changeset{data: %Teamuser{}}
+
+  """
+  def change_teamuser(%Teamuser{} = teamuser, attrs \\ %{}) do
+    Teamuser.changeset(teamuser, attrs)
+  end
+
+  def sign_in(username, password) do
+    query =
+      from user in User,
+        where: user.username == ^username and user.password == ^Pbkdf2.Base.hash_password(password, "a")
+    # IO.puts(Pbkdf2.Base.hash_password("dadz", "a"))
+    Repo.one(query)
   end
 end

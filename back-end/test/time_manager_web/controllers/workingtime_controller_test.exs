@@ -6,12 +6,12 @@ defmodule TodolistWeb.WorkingtimeControllerTest do
   alias Todolist.Schema.Workingtime
 
   @create_attrs %{
-    start: ~N[2021-11-08 13:22:00],
-    stop: ~N[2021-11-08 13:22:00]
+    start: ~N[2021-11-10 18:51:00],
+    stop: ~N[2021-11-10 18:51:00]
   }
   @update_attrs %{
-    start: ~N[2021-11-09 13:22:00],
-    stop: ~N[2021-11-09 13:22:00]
+    start: ~N[2021-11-11 18:51:00],
+    stop: ~N[2021-11-11 18:51:00]
   }
   @invalid_attrs %{start: nil, stop: nil}
 
@@ -35,8 +35,8 @@ defmodule TodolistWeb.WorkingtimeControllerTest do
 
       assert %{
                "id" => ^id,
-               "start" => "2021-11-08T13:22:00",
-               "stop" => "2021-11-08T13:22:00"
+               "start" => "2021-11-10T18:51:00",
+               "stop" => "2021-11-10T18:51:00"
              } = json_response(conn, 200)["data"]
     end
 
@@ -57,8 +57,8 @@ defmodule TodolistWeb.WorkingtimeControllerTest do
 
       assert %{
                "id" => ^id,
-               "start" => "2021-11-09T13:22:00",
-               "stop" => "2021-11-09T13:22:00"
+               "start" => "2021-11-11T18:51:00",
+               "stop" => "2021-11-11T18:51:00"
              } = json_response(conn, 200)["data"]
     end
 

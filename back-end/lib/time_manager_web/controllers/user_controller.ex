@@ -40,4 +40,15 @@ defmodule TodolistWeb.UserController do
       send_resp(conn, :no_content, "")
     end
   end
+
+  def signin(conn, %{"username" => username, "password" => password}) do
+    user = Schema.sign_in(username, password)
+    if (user) do
+      signer = Joken.Signer.create("HS256", Application.get_env(:joken, :default_signer))
+      {:ok, token, _claims} = TodolistWeb.Token.generate_and_sign(%{"username" => username, "role" => user.role}, signer)
+      send_resp(conn, 200, token)
+    else
+      send_resp(conn, 404, "")
+    end
+  end
 end

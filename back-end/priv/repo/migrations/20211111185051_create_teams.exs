@@ -3,6 +3,7 @@ defmodule Todolist.Repo.Migrations.CreateTeams do
 
   def change do
     create table(:teams) do
+      add :name, :string
       add :managerID, references(:users, on_delete: :nothing)
 
       timestamps()

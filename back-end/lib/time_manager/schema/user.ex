@@ -18,6 +18,5 @@ defmodule Todolist.Schema.User do
     user
     |> cast(attrs, [:username, :password, :mail, :role, :firstname, :lastname])
     |> validate_required([:username, :password, :mail, :role, :firstname, :lastname])
-    |> validate_format(:email, ~r/@/)
   end
 end

@@ -3,6 +3,7 @@ defmodule Todolist.Schema.Team do
   import Ecto.Changeset
 
   schema "teams" do
+    field :name, :string
     field :managerID, :id
 
     timestamps()
@@ -11,7 +12,7 @@ defmodule Todolist.Schema.Team do
   @doc false
   def changeset(team, attrs) do
     team
-    |> cast(attrs, [:managerID])
-    |> validate_required([:managerID])
+    |> cast(attrs, [:name, :managerID])
+    |> validate_required([:name, :managerID])
   end
 end
