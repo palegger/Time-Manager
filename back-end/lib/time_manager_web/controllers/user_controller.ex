@@ -22,6 +22,8 @@ defmodule TodolistWeb.UserController do
 
   def show(conn, %{"id" => id}) do
     user = Schema.get_user!(id)
+    IO.inspect(conn.assigns[:tokenUserID])
+    IO.inspect(conn.assigns[:tokenRole])
     render(conn, "show.json", user: user)
   end
 
@@ -45,7 +47,7 @@ defmodule TodolistWeb.UserController do
     user = Schema.sign_in(username, password)
     if (user) do
       signer = Joken.Signer.create("HS256", Application.get_env(:joken, :default_signer))
-      {:ok, token, _claims} = TodolistWeb.Token.generate_and_sign(%{"username" => username, "role" => user.role}, signer)
+      {:ok, token, _claims} = TodolistWeb.Token.generate_and_sign(%{"userID" => user.id, "role" => user.role}, signer)
       send_resp(conn, 200, token)
     else
       send_resp(conn, 404, "")
