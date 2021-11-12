@@ -11,10 +11,15 @@ defmodule TodolistWeb.Router do
 
   scope "/api", TodolistWeb do
     pipe_through :api
+
+    # USERS
     post "/users/sign_in", UserController, :signin
     post "/users/sign_up", UserController, :create
     pipe_through :auth
     get "/users/:id", UserController, :show
+    get "/users/",UserController, :index
+    delete "/users/:id",UserController, :delete
+    put "/users/:id",UserController, :update
     # post "/users/sign_out", UserController, :signout
   end
 

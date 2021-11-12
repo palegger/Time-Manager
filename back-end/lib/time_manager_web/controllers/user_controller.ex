@@ -7,8 +7,17 @@ defmodule TodolistWeb.UserController do
   action_fallback TodolistWeb.FallbackController
 
   def index(conn, _params) do
-    users = Schema.list_users()
-    render(conn, "index.json", users: users)
+    role = 2
+
+    cond do
+      role == 2 ->
+        users = Schema.list_users()
+        render(conn, "index.json", users: users)
+      true ->
+        Plug.Conn.send_resp(conn, 401, "")
+    end
+
+
   end
 
   def create(conn, %{"user" => user_params}) do
@@ -21,24 +30,59 @@ defmodule TodolistWeb.UserController do
   end
 
   def show(conn, %{"id" => id}) do
-    user = Schema.get_user!(id)
-    render(conn, "show.json", user: user)
+    role = 0
+    userid = "36"
+    cond do
+      userid == id ->
+        user = Schema.get_user!(id)
+        render(conn, "show.json", user: user)
+      role == 2 ->
+        user = Schema.get_user!(id)
+        render(conn, "show.json", user: user)
+      true ->
+        Plug.Conn.send_resp(conn, 401, "")
+    end
   end
 
   def update(conn, %{"id" => id, "user" => user_params}) do
     user = Schema.get_user!(id)
 
-    with {:ok, %User{} = user} <- Schema.update_user(user, user_params) do
-      render(conn, "show.json", user: user)
+    role = 0
+    userid = "36"
+    cond do
+      userid == id ->
+        with {:ok, %User{} = user} <- Schema.update_user(user, user_params) do
+          render(conn, "show.json", user: user)
+        end
+      role == 2 ->
+        with {:ok, %User{} = user} <- Schema.update_user(user, user_params) do
+          render(conn, "show.json", user: user)
+        end
+      true ->
+        Plug.Conn.send_resp(conn, 401, "")
     end
   end
 
   def delete(conn, %{"id" => id}) do
-    user = Schema.get_user!(id)
+    role = 0
+    userid = "36"
 
-    with {:ok, %User{}} <- Schema.delete_user(user) do
-      send_resp(conn, :no_content, "")
+    user = Schema.get_user!(id)
+    cond do
+      userid == id ->
+        with {:ok, %User{}} <- Schema.delete_user(user) do
+          send_resp(conn, :no_content, "")
+        end
+      role == 2 ->
+        with {:ok, %User{}} <- Schema.delete_user(user) do
+          send_resp(conn, :no_content, "")
+        end
+      true ->
+        Plug.Conn.send_resp(conn, 401, "")
     end
+
+
+
   end
 
   def signin(conn, %{"username" => username, "password" => password}) do
@@ -51,4 +95,5 @@ defmodule TodolistWeb.UserController do
       send_resp(conn, 404, "")
     end
   end
+
 end
