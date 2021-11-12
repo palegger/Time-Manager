@@ -30,10 +30,10 @@ defmodule TodolistWeb.UserController do
   end
 
   def show(conn, %{"id" => id}) do
-    IO.inspect(conn.assigns[:tokenUserID])
-    IO.inspect(conn.assigns[:tokenRole])
-    role = 0
-    userid = "36"
+
+    require Logger
+    role = conn.assigns[:tokenRole]
+    userid = to_string(conn.assigns[:tokenUserID])
     cond do
       userid == id ->
         user = Schema.get_user!(id)
@@ -48,9 +48,8 @@ defmodule TodolistWeb.UserController do
 
   def update(conn, %{"id" => id, "user" => user_params}) do
     user = Schema.get_user!(id)
-
-    role = 0
-    userid = "36"
+    role = conn.assigns[:tokenRole]
+    userid = to_string(conn.assigns[:tokenUserID])
     cond do
       userid == id ->
         with {:ok, %User{} = user} <- Schema.update_user(user, user_params) do
@@ -66,8 +65,9 @@ defmodule TodolistWeb.UserController do
   end
 
   def delete(conn, %{"id" => id}) do
-    role = 0
-    userid = "36"
+
+    role = conn.assigns[:tokenRole]
+    userid = to_string(conn.assigns[:tokenUserID])
 
     user = Schema.get_user!(id)
     cond do
