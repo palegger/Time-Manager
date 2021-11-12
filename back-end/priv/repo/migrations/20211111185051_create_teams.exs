@@ -10,5 +10,6 @@ defmodule Todolist.Repo.Migrations.CreateTeams do
     end
 
     create index(:teams, [:managerID])
+    create unique_index(:teams, [:name])
   end
 end
