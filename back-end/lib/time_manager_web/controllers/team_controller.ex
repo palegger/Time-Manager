@@ -41,10 +41,17 @@ defmodule TodolistWeb.TeamController do
   end
 
   def delete(conn, %{"id" => id}) do
+    userid = conn.assigns[:tokenUserID]
+
     team = Schema.get_team!(id)
 
-    with {:ok, %Team{}} <- Schema.delete_team(team) do
-      send_resp(conn, :no_content, "")
+    cond do
+      userid == team.managerID ->
+        with {:ok, %Team{}} <- Schema.delete_team(team) do
+          send_resp(conn, :no_content, "")
+        end
+        true ->
+          Plug.Conn.send_resp(conn, 401, "")
     end
   end
 end

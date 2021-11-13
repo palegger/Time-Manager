@@ -9,7 +9,7 @@ defmodule TodolistWeb.Router do
     plug TodolistWeb.Auth
   end
 
-  scope "/api", TodolistWeb do
+  scope "/api", TodolistWeb dox
     pipe_through :api
 
     # USERS
@@ -34,6 +34,7 @@ defmodule TodolistWeb.Router do
     get "clocks/:id", ClockController, :show
     # TEAMS
     post "/teams/:name", TeamController, :create
+    delete "/teams/:id", TeamController, :delete
     get "/teams", TeamController, :index
   end
 
