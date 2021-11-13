@@ -22,6 +22,17 @@ defmodule TodolistWeb.Router do
     put "/users/:id",UserController, :update
     put "/users/promote/:id", UserController, :promote
     # post "/users/sign_out", UserController, :signout
+
+    post "workingtimes/user/:userID", WorkingtimeController, :indexperiod
+    get "workingtimes/:id", WorkingtimeController, :show
+    post "workingtimes/:userID", WorkingtimeController, :create
+    put "workingtimes/:id", WorkingtimeController, :update
+    delete "workingtimes/:id", WorkingtimeController, :delete
+
+    get "clocks/user/:userID", ClockController, :indexclocks
+    post "clocks/:userID", ClockController, :create
+    get "clocks/:id", ClockController, :show
+
   end
 
   # Enables LiveDashboard only for development

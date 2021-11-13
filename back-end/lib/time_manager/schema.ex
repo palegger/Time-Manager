@@ -230,6 +230,13 @@ defmodule Todolist.Schema do
   """
   def get_workingtime!(id), do: Repo.get!(Workingtime, id)
 
+
+  def get_working_time_list_period(userId, startDT, endDT) do
+    Workingtime
+    |> Workingtime.getByUsernameAndEmail(userId, startDT, endDT)
+    |> Repo.all()
+  end
+
   @doc """
   Creates a workingtime.
 
@@ -308,6 +315,13 @@ defmodule Todolist.Schema do
   """
   def list_clocks do
     Repo.all(Clock)
+  end
+
+
+  def list_clocks_by_user(userId) do
+    Clock
+    |> Clock.getByUserId(userId)
+    |> Repo.all()
   end
 
   @doc """
