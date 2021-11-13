@@ -7,8 +7,7 @@ defmodule TodolistWeb.UserController do
   action_fallback TodolistWeb.FallbackController
 
   def index(conn, _params) do
-    role = 2
-
+    role = conn.assigns[:tokenRole]
     cond do
       role == 2 ->
         users = Schema.list_users()
@@ -30,7 +29,6 @@ defmodule TodolistWeb.UserController do
   end
 
   def show(conn, %{"id" => id}) do
-
     require Logger
     role = conn.assigns[:tokenRole]
     userid = to_string(conn.assigns[:tokenUserID])

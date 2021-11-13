@@ -27,7 +27,6 @@ defmodule TodolistWeb.TeamController do
         Plug.Conn.send_resp(conn, 401, "")
      end
   end
-
   def show(conn, %{"id" => id}) do
     team = Schema.get_team!(id)
     render(conn, "show.json", team: team)
