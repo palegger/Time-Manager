@@ -33,10 +33,17 @@ defmodule TodolistWeb.TeamController do
   end
 
   def update(conn, %{"id" => id, "team" => team_params}) do
+    userid = conn.assigns[:tokenUserID]
+
     team = Schema.get_team!(id)
 
-    with {:ok, %Team{} = team} <- Schema.update_team(team, team_params) do
-      render(conn, "show.json", team: team)
+    cond do
+      userid == team.managerID ->
+        with {:ok, %Team{} = team} <- Schema.update_team(team, team_params) do
+          render(conn, "show.json", team: team)
+        end
+      true ->
+        Plug.Conn.send_resp(conn, 401, "")
     end
   end
 
@@ -50,8 +57,8 @@ defmodule TodolistWeb.TeamController do
         with {:ok, %Team{}} <- Schema.delete_team(team) do
           send_resp(conn, :no_content, "")
         end
-        true ->
-          Plug.Conn.send_resp(conn, 401, "")
+      true ->
+        Plug.Conn.send_resp(conn, 401, "")
     end
   end
 end
