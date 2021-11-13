@@ -21,7 +21,10 @@ defmodule TodolistWeb.Router do
     delete "/users/:id",UserController, :delete
     put "/users/:id",UserController, :update
     put "/users/promote/:id", UserController, :promote
-    # post "/users/sign_out", UserController, :signout
+
+    # TEAMS
+    post "/teams/:name", TeamController, :create
+    get "/teams", TeamController, :index
   end
 
   # Enables LiveDashboard only for development
