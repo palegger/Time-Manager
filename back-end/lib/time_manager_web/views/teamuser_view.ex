@@ -12,7 +12,9 @@ defmodule TodolistWeb.TeamuserView do
 
   def render("teamuser.json", %{teamuser: teamuser}) do
     %{
-      id: teamuser.id
+      id: teamuser.id,
+      teamID: teamuser.teamID,
+      userID: teamuser.userID
     }
   end
 end

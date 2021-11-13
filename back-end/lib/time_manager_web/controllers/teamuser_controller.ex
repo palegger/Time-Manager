@@ -11,12 +11,12 @@ defmodule TodolistWeb.TeamuserController do
     render(conn, "index.json", teamusers: teamusers)
   end
 
-  def create(conn, %{"teamuser" => teamuser_params}) do
-    with {:ok, %Teamuser{} = teamuser} <- Schema.create_teamuser(teamuser_params) do
-      conn
-      |> put_status(:created)
-      |> put_resp_header("location", Routes.teamuser_path(conn, :show, teamuser))
-      |> render("show.json", teamuser: teamuser)
+  def create(conn, %{"teamid" => teamID , "userid" => userID}) do
+
+    teamuser_params = %{"teamID" => teamID, "userID" => userID}
+
+    with {:ok, %Teamuser{} = _teamuser} <- Schema.create_teamuser(teamuser_params) do
+      Plug.Conn.send_resp(conn, 201, "")
     end
   end
 
@@ -25,9 +25,13 @@ defmodule TodolistWeb.TeamuserController do
     render(conn, "show.json", teamuser: teamuser)
   end
 
+  def indexTeam(conn, %{"teamid" => id}) do
+    teamusers = Schema.get_teamusers_by_team(id)
+    render(conn, "index.json", teamusers: teamusers)
+  end
+
   def update(conn, %{"id" => id, "teamuser" => teamuser_params}) do
     teamuser = Schema.get_teamuser!(id)
-
     with {:ok, %Teamuser{} = teamuser} <- Schema.update_teamuser(teamuser, teamuser_params) do
       render(conn, "show.json", teamuser: teamuser)
     end

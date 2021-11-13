@@ -104,7 +104,9 @@ defmodule TodolistWeb.UserController do
     if (user) do
       signer = Joken.Signer.create("HS256", Application.get_env(:joken, :default_signer))
       {:ok, token, _claims} = TodolistWeb.Token.generate_and_sign(%{"userID" => user.id, "role" => user.role}, signer)
-      send_resp(conn, 200, token)
+      conn
+      |>put_resp_content_type("application/json")
+      |>send_resp(200, Jason.encode!(%{"token" => token}))
     else
       send_resp(conn, 404, "")
     end

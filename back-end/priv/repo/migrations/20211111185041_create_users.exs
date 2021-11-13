@@ -12,6 +12,7 @@ defmodule Todolist.Repo.Migrations.CreateUsers do
 
       timestamps()
     end
-    create unique_index(:users, [:username, :mail])
+    create unique_index(:users, :username)
+    create unique_index(:users, :mail)
   end
 end
