@@ -20,6 +20,7 @@ defmodule TodolistWeb.Router do
     get "/users/",UserController, :index
     delete "/users/:id",UserController, :delete
     put "/users/:id",UserController, :update
+    put "/users/promote/:id", UserController, :promote
     # post "/users/sign_out", UserController, :signout
   end
 

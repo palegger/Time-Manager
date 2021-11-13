@@ -64,6 +64,20 @@ defmodule TodolistWeb.UserController do
     end
   end
 
+  def promote(conn, %{"id" => id}) do
+    user = Schema.get_user!(id)
+    role = conn.assigns[:tokenRole]
+    cond do
+      role == 2 ->
+        user_params = %{"role" => 1}
+        with {:ok, %User{}} <- Schema.update_user(user, user_params) do
+          Plug.Conn.send_resp(conn, 202, "")
+        end
+      true ->
+        Plug.Conn.send_resp(conn, 401, "")
+    end
+  end
+
   def delete(conn, %{"id" => id}) do
 
     role = conn.assigns[:tokenRole]
