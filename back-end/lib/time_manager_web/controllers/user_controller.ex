@@ -30,7 +30,6 @@ defmodule TodolistWeb.UserController do
   end
 
   def show(conn, %{"id" => id}) do
-
     require Logger
     role = conn.assigns[:tokenRole]
     userid = to_string(conn.assigns[:tokenUserID])
