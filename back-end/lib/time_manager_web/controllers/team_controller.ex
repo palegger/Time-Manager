@@ -11,13 +11,21 @@ defmodule TodolistWeb.TeamController do
     render(conn, "index.json", teams: teams)
   end
 
-  def create(conn, %{"team" => team_params}) do
-    with {:ok, %Team{} = team} <- Schema.create_team(team_params) do
-      conn
-      |> put_status(:created)
-      |> put_resp_header("location", Routes.team_path(conn, :show, team))
-      |> render("show.json", team: team)
-    end
+  def create(conn, %{"name" => name}) do
+    userid = to_string(conn.assigns[:tokenUserID])
+    role = conn.assigns[:tokenRole]
+
+    body = %{"name" => name, "managerID" => userid}
+
+    cond do
+      role == 1 || role == 2 ->
+
+        with {:ok, %Team{} = _team} <- Schema.create_team(body) do
+          Plug.Conn.send_resp(conn, 201, "Team created")
+        end
+      true ->
+        Plug.Conn.send_resp(conn, 401, "")
+     end
   end
 
   def show(conn, %{"id" => id}) do

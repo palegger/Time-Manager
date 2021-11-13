@@ -32,7 +32,9 @@ defmodule TodolistWeb.Router do
     get "clocks/user/:userID", ClockController, :indexclocks
     post "clocks/:userID", ClockController, :create
     get "clocks/:id", ClockController, :show
-
+    # TEAMS
+    post "/teams/:name", TeamController, :create
+    get "/teams", TeamController, :index
   end
 
   # Enables LiveDashboard only for development
