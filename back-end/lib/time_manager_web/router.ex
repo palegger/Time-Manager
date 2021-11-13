@@ -36,7 +36,7 @@ defmodule TodolistWeb.Router do
     post "/teams/:name", TeamController, :create
     delete "/teams/:id", TeamController, :delete
     put "/teams/:id", TeamController, :update
-    get "/teams", TeamController, :index
+    get "/teams/:id", TeamController, :show
 
     #TEAMUSER
     post "/teams/add/:teamid/:userid",TeamuserController, :create
