@@ -9,7 +9,7 @@ defmodule TodolistWeb.Router do
     plug TodolistWeb.Auth
   end
 
-  scope "/api", TodolistWeb dox
+  scope "/api", TodolistWeb do
     pipe_through :api
 
     # USERS
