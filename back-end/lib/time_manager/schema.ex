@@ -69,8 +69,9 @@ defmodule Todolist.Schema do
 
   """
   def update_user(%User{} = user, attrs) do
+    new_attr = Map.replace(attrs, "password", Pbkdf2.Base.hash_password(get_in(attrs, ["password"]), "a"))
     user
-    |> User.changeset(attrs)
+    |> User.changeset(new_attr)
     |> Repo.update()
   end
 
