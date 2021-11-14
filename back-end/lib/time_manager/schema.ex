@@ -184,6 +184,7 @@ defmodule Todolist.Schema do
     |> Repo.all()
   end
 
+
   @doc """
   Deletes a team.
 
@@ -449,6 +450,12 @@ defmodule Todolist.Schema do
   def get_teams_by_user(userID) do
     Teamuser
     |> Teamuser.getByUser(userID)
+    |> Repo.all()
+  end
+
+  def get_teamID(userid); do
+    Teamuser
+    |> Teamuser.getTeamID(userid)
     |> Repo.all()
   end
 
