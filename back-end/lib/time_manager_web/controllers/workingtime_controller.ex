@@ -96,18 +96,23 @@ defmodule TodolistWeb.WorkingtimeController do
     teamID = Schema.get_teamID(id);
     manager = Schema.get_team_manager_id(List.first(teamID));
 
-    cond do
-      role == 2 ->
-        workingtimes = Schema.get_working_time_list_period(userId, startDT, endDT);
-        render(conn, "index.json", workingtimes: workingtimes)
-      role == 1 && List.first(manager) == id ->
-        workingtimes = Schema.get_working_time_list_period(userId, startDT, endDT);
-        render(conn, "index.json", workingtimes: workingtimes)
-      userId == id ->
-        workingtimes = Schema.get_working_time_list_period(userId, startDT, endDT);
-        render(conn, "index.json", workingtimes: workingtimes)
-      true ->
-        Plug.Conn.send_resp(conn, 401, "")
+    if(is_nil(manager)) do
+      workingtimes = Schema.get_working_time_list_period(userId, startDT, endDT);
+      render(conn, "index.json", workingtimes: workingtimes)
+    else
+      cond do
+        role == 2 ->
+          workingtimes = Schema.get_working_time_list_period(userId, startDT, endDT);
+          render(conn, "index.json", workingtimes: workingtimes)
+        role == 1 && List.first(manager) == id ->
+          workingtimes = Schema.get_working_time_list_period(userId, startDT, endDT);
+          render(conn, "index.json", workingtimes: workingtimes)
+        userId == id ->
+          workingtimes = Schema.get_working_time_list_period(userId, startDT, endDT);
+          render(conn, "index.json", workingtimes: workingtimes)
+        true ->
+          Plug.Conn.send_resp(conn, 401, "")
+      end
     end
   end
 end
