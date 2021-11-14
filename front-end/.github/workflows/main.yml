@@ -1,0 +1,62 @@
+
+name: Get Android APK
+
+on: [push, pull_request]
+
+jobs:
+  build:
+    name: Build APK
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout source
+        uses: actions/checkout@v2
+
+      - name: setup java sdk
+        uses: actions/setup-java@v1
+        with:
+          java-version: '8'
+
+      - name: setup Node.js
+        uses: actions/setup-node@v1
+        with:
+          node-version: 13.x
+
+      - name: Install Cordova
+        run: npm i -g cordova
+
+      - name: Install app dependencies
+        run: npm install
+
+      - name: build the app
+        run: npm run build
+
+      - name: Change directory cordova
+        run: cd ./timemanager
+        
+      - name: Use oxr463/setup-cordova
+        uses: oxr463/setup-cordova@0.0.2
+        with:
+          exec: |
+            cd timemanager && \
+            cordova platform add android && \
+            cordova build --no-telemetry && \
+            cp "$(find . -name '*.apk')" .
+            
+      #- name: Add to android
+      #  working-directory: ./timemanager
+      #  run: cordova platform add android
+        
+      #- name: Build the APK
+      #  working-directory: ./timemanager/platforms/android
+      #  run: gradle build
+
+      #- uses: gradle/gradle-build-action@v2
+      #  with:
+      #    gradle-version: 1.9
+      #    build-root-directory: /apk/
+        
+      #- name: Upload dev APK
+      #  uses: actions/upload-artifact@v1
+      #  with:
+      #    name: app-dev
+      #    path: /apk/app.apk

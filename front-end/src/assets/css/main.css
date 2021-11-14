@@ -1,0 +1,137 @@
+@font-face {
+    font-family: "Roboto";
+    src: local("Roboto"),
+     url(../fonts/Roboto-Regular.ttf);
+}
+
+* {
+    font-family: Roboto;
+}
+
+html {
+    height: 100%;
+}
+
+body {
+    background-color: #393E41;
+    height: 100%;
+    margin: 0;
+}
+
+#app {
+    height: 100%;
+}
+
+input {
+    border-radius: 5px;
+    border : solid 2px #393E41
+}
+
+.card-template {
+    background: #E7E5DF;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+}
+
+.card-template .title {
+    
+    font-weight: 700;
+    font-size: 1.5em;
+}
+
+.card-template .card-header {
+    display: flex;
+    align-items: center;
+    min-height: 50px;
+    padding-left: 20px;
+    background-color: #44BBA4;
+    color: white;
+    border-radius: 10px 10px 0px 0px;
+}
+
+.card-template .card-body {
+    height: auto;
+    width: calc(100% - 2em);
+    height: calc(100% - 2em);
+    margin: 1em;
+}
+
+.form-action-button {
+    height: 35px;
+    width: 100px;
+    border-radius: 10px;
+    border: none;
+    cursor: pointer;
+    background: #44BBA4;
+    color: white;
+    margin: 10px;
+}
+.form-action-button:hover {
+    box-shadow: 0px 10px 10px;
+    transition-duration: 500ms;
+    transition-property: box-shadow;
+}
+
+.title-container {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    color: #E7BB41;
+}
+
+
+/* DASHBOARD MENU */
+#dashboard-main {
+    height: 100%;
+    width: 100%;
+}
+
+#dashboard-container {
+    display: flex;
+}
+#dashboard-container>div {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    height: 100%;
+    width: 100%;
+}
+
+@media screen and (max-width: 640px) {
+    #dashboard-main {
+        padding-bottom: 80px;
+    }
+    #dashboard-container {
+        flex-direction: column;
+        width: calc(100% - 50px);
+        margin: 30px 25px;
+        height: auto;
+        padding-bottom: 80px;
+    }
+    #dashboard-container .dashboard-left {
+        min-width : 100%;
+    }
+    #dashboard-container .dashboard-right {
+        min-width : 100%;
+        text-align: center;
+    }
+}
+
+@media screen and (min-width: 640px) {
+    #dashboard-container {
+        width: calc(100% - 100px);
+        margin: 30px 50px;
+        height: calc(100% - 80px) /* Navbars height */;
+    }
+    #dashboard-container .dashboard-left {
+        width : 600px;
+    }
+    #dashboard-container .dashboard-right {
+        width: calc(100% - 600px);
+        padding-left: 4em;
+        min-width: 500px;
+    }
+}
