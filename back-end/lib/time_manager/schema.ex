@@ -428,6 +428,12 @@ defmodule Todolist.Schema do
     Repo.all(Teamuser)
   end
 
+  def get_teamusers_by_team(teamID) do
+    Teamuser
+    |> Teamuser.getByTeam(teamID)
+    |> Repo.all()
+  end
+
   @doc """
   Gets a single teamuser.
 
