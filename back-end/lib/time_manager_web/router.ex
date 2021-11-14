@@ -37,11 +37,13 @@ defmodule TodolistWeb.Router do
     delete "/teams/:id", TeamController, :delete
     put "/teams/:id", TeamController, :update
     get "/teams/:id", TeamController, :show
+    get "/teams", TeamController, :index
 
     #TEAMUSER
     post "/teams/add/:teamid/:userid",TeamuserController, :create
     # get "/teams/users/:id", TeamuserController, :show
-    get "/teams/users/:teamid", TeamuserController, :indexTeam
+    get "/teams/users/:teamid", TeamuserController, :indexUser  # get all user in team with teamID
+    get "/teams/teams/", TeamuserController, :indexTeam  # get all the teams where a user is with userID
 
     get "/teams/users/", TeamuserController, :index
   end
