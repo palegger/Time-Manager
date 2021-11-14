@@ -263,30 +263,6 @@ export default {
 </script>
 
 <style scoped>
-.form-container {
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-    height: 100%;
-}
-.form-container .form-row {
-    display: flex;
-    align-items: center;
-    height: 100%;
-    justify-content: space-around;
-    margin: 0.5em 0px;
-}
-.form-row.form-row-wrap {
-    flex-wrap: wrap;
-}
-.form-container .form-row label {
-    width: 30%;
-}
 
-.form-container .form-row input {
-    margin-left: 10px;
-    width: calc(70% - 10px);
-    height: 25px;
-}
 
 </style>

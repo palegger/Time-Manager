@@ -6,16 +6,17 @@
           <router-link to="/"><fa class="link-item-icon" icon="home"/></router-link>
         </div>
         <div class="navbar-link-item">
-          <router-link class="link-item-text" to="/workingtimes">Working Times</router-link>
-          <router-link to="/workingtimes"><fa class="link-item-icon" icon="user-clock"/></router-link> 
-        </div>
-        <div class="navbar-link-item">
-          <router-link class="link-item-text" to="/clock">Clock Manager</router-link>
+          <router-link class="link-item-text" to="/clock">Clock</router-link>
           <router-link to="/clock"><fa class="link-item-icon" icon="stopwatch"/></router-link>
         </div>
         <div class="navbar-link-item">
-          <router-link class="link-item-text" to="/">Chart Manager</router-link>
-          <router-link to="/"><fa class="link-item-icon" icon="chart-pie"/></router-link>
+          <router-link class="link-item-text" to="/workingtimes">Attendance Manager</router-link>
+          <router-link to="/workingtimes"><fa class="link-item-icon" icon="user-clock"/></router-link> 
+        </div>
+
+        <div class="navbar-link-item">
+          <router-link class="link-item-text" to="/team">Team Manager</router-link>
+          <router-link to="/team"><fa class="link-item-icon" icon="chart-pie"/></router-link>
         </div>
       </div>
       <div class="navbar-right">
@@ -50,6 +51,7 @@ export default {
     width: calc(100% - 100px);
     background: #44BBA4;
     padding: 0px 50px;
+    overflow-y: hidden;
   }
 
   #dashboard-navbar .navbar-link-container {
@@ -103,7 +105,7 @@ export default {
         #dashboard-navbar {
             position: fixed;
             bottom: -1px;
-            overflow-y: scroll;
+            overflow-x: scroll;
             z-index: 11;
         }
         #dashboard-navbar .navbar-link-container {

@@ -3,6 +3,7 @@ import Welcome from '../components/Welcome.vue';
 import WorkingTimes from '../components/WorkingTimes.vue';
 import Clock from '../components/Clock.vue';
 import Login from '../components/Login.vue'
+import Team from '../components/Team.vue'
 
 function navGuard (to, from, next) {
   let jwt = localStorage.getItem("jwt");
@@ -36,8 +37,13 @@ const routes = [
     name: 'Clock',
     component: Clock,
     beforeEnter : navGuard
+  },
+  {
+    path: '/team',
+    name: 'Team',
+    component: Team,
+    beforeEnter : navGuard
   }
-
 ]
 
 const router = createRouter({
