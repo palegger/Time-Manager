@@ -16,7 +16,7 @@ defmodule TodolistWeb.TeamuserController do
     teamuser_params = %{"teamID" => teamID, "userID" => userID}
 
     with {:ok, %Teamuser{} = _teamuser} <- Schema.create_teamuser(teamuser_params) do
-      Plug.Conn.send_resp(conn, 201, "")
+      Plug.Conn.send_resp(conn, 201, Jason.encode!(%{"data" => "success"}))
     end
   end
 
