@@ -26,7 +26,7 @@
                     Team #{{team.id}}
                 </div>
                 <div class="card-body">
-                    You are member
+                    {{team.name}}
                 </div>
             </div>
         </div>
@@ -82,9 +82,17 @@ export default {
             if(response.status == 200) {
                 if (data.data.length > 0 )
                     data.data.forEach( team => {
-                        this.teams.push({ id :  team.teamID})
+                        this.getTeamInfos(team.teamID);
                     })
             }
+        },
+        getTeamInfos : async function (teamId) {
+            const { response, data } = await this.customFetch("GET", `teams/${teamId}`)
+            if(response.status == 200) {
+                this.teams.push(data.data)
+                return data.data
+            }
+            else return null;
         }
     }
 }
@@ -114,6 +122,7 @@ export default {
     }
     .team-card {
         margin: 10px 0px;
+        width: 10em;
     }
     @media screen and (min-width: 640px) {
         #teams-container .single-team {
