@@ -43,7 +43,7 @@ defmodule TodolistWeb.Router do
     post "/teams/add/:teamid/:userid",TeamuserController, :create
     # get "/teams/users/:id", TeamuserController, :show
     get "/teams/users/:teamid", TeamuserController, :indexUser  # get all user in team with teamID
-    get "/teams/teams/", TeamuserController, :indexTeam  # get all the teams where a user is with userID
+    get "/teams/teams/:userid", TeamuserController, :indexTeam  # get all the teams where a user is with userID
 
     get "/teams/users/", TeamuserController, :index
   end

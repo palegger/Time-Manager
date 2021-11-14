@@ -42,10 +42,16 @@ defmodule TodolistWeb.TeamuserController do
     end
   end
 
-  def indexTeam(conn,_params) do  # get all the teams where a user is with userID
+  def indexTeam(conn, %{"userid" => id}) do  # get all the teams where a user is with userID
     userid = to_string(conn.assigns[:tokenUserID])
-    teams = Schema.get_teams_by_user(userid)
-    render(conn, "index.json", teamusers: teams)
+    role = conn.assigns[:tokenRole]
+    cond do
+      id == userid || role == 2 ->
+        teams = Schema.get_teams_by_user(userid)
+        render(conn, "index.json", teamusers: teams)
+      true ->
+        Plug.Conn.send_resp(conn, 401, "")
+    end
   end
 
 
