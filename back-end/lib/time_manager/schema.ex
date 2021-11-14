@@ -453,7 +453,7 @@ defmodule Todolist.Schema do
     |> Repo.all()
   end
 
-  def get_teamID(userid); do
+  def get_teamID(userid) do
     Teamuser
     |> Teamuser.getTeamID(userid)
     |> Repo.all()
