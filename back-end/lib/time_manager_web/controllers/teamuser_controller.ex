@@ -25,10 +25,29 @@ defmodule TodolistWeb.TeamuserController do
     render(conn, "show.json", teamuser: teamuser)
   end
 
-  def indexTeam(conn, %{"teamid" => id}) do
-    teamusers = Schema.get_teamusers_by_team(id)
-    render(conn, "index.json", teamusers: teamusers)
+  def indexUser(conn, %{"teamid" => id}) do # get all user in team with teamID
+    role = conn.assigns[:tokenRole]
+    userid = conn.assigns[:tokenUserID]
+    manager = Schema.get_team_manager_id(id);
+
+    cond do
+      role == 2 ->
+        teamusers = Schema.get_teamusers_by_team(id)
+        render(conn, "index.json", teamusers: teamusers)
+      role == 1 && List.first(manager) == userid ->
+        teamusers = Schema.get_teamusers_by_team(id)
+        render(conn, "index.json", teamusers: teamusers)
+      true ->
+          Plug.Conn.send_resp(conn, 401, "")
+    end
   end
+
+  def indexTeam(conn,_params) do  # get all the teams where a user is with userID
+    userid = to_string(conn.assigns[:tokenUserID])
+    teams = Schema.get_teams_by_user(userid)
+    render(conn, "index.json", teamusers: teams)
+  end
+
 
   def update(conn, %{"id" => id, "teamuser" => teamuser_params}) do
     teamuser = Schema.get_teamuser!(id)

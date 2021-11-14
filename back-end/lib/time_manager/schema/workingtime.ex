@@ -23,4 +23,11 @@ defmodule Todolist.Schema.Workingtime do
     where: workingtimes.start >= ^startDT and workingtimes.stop <= ^endDT and workingtimes.userID == ^userId,
     select: %{start: workingtimes.start, stop: workingtimes.stop, id: workingtimes.id}
   end
+
+  def getuserID(query, id) do
+    from workingtimes in query,
+      where: workingtimes.id == ^id,
+      select: workingtimes.userID
+  end
+
 end

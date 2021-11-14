@@ -22,4 +22,19 @@ defmodule Todolist.Schema.Teamuser do
     where: teamusers.teamID == ^teamID,
     select: %{teamID: teamusers.teamID, userID: teamusers.userID, id: teamusers.id}
   end
+
+
+  def getByUser(query, userID) do
+    from teamusers in query,
+    where: teamusers.userID == ^userID,
+    select: %{teamID: teamusers.teamID, userID: teamusers.userID, id: teamusers.id}
+  end
+
+
+  def getTeamID(query, userid) do
+    from teamusers in query,
+    where: teamusers.userID == ^userid,
+    select: teamusers.teamID
+  end
+
 end

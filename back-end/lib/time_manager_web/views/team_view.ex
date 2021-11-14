@@ -13,7 +13,8 @@ defmodule TodolistWeb.TeamView do
   def render("team.json", %{team: team}) do
     %{
       id: team.id,
-      name: team.name
+      name: team.name,
+      managerID: team.managerID
     }
   end
 end

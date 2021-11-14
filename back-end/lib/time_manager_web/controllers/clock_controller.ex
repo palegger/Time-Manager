@@ -11,8 +11,10 @@ defmodule TodolistWeb.ClockController do
     render(conn, "index.json", clocks: clocks)
   end
 
-  def create(conn, %{"clock" => clock_params, "userID" => userId}) do
-    clock_params_new = Map.put_new(clock_params, "userID", String.to_integer(userId))
+  def create(conn, %{"clock" => clock_params}) do
+    userid = to_string(conn.assigns[:tokenUserID])
+
+    clock_params_new = Map.put_new(clock_params, "userID", String.to_integer(userid))
     IO.inspect(clock_params_new)
     with {:ok, %Clock{} = clock} <- Schema.create_clock(clock_params_new) do
       conn
@@ -23,13 +25,29 @@ defmodule TodolistWeb.ClockController do
   end
 
   def indexclocks(conn, %{"userID" => userId}) do
-    clocks = Schema.list_clocks_by_user(userId)
-    render(conn, "index.json", clocks: clocks)
+    userid = to_string(conn.assigns[:tokenUserID])
+
+    cond do
+      userid == userId ->
+        clocks = Schema.list_clocks_by_user(userId)
+        render(conn, "index.json", clocks: clocks)
+      true ->
+        Plug.Conn.send_resp(conn, 401, "")
+    end
   end
 
   def show(conn, %{"id" => id}) do
+    userid = conn.assigns[:tokenUserID]
+
     clock = Schema.get_clock!(id)
-    render(conn, "show.json", clock: clock)
+    IO.inspect(userid)
+    IO.inspect(clock)
+    cond do
+      userid == clock.userID ->
+        render(conn, "show.json", clock: clock)
+      true ->
+        Plug.Conn.send_resp(conn, 401, "")
+      end
   end
 
   def update(conn, %{"id" => id, "clock" => clock_params}) do
