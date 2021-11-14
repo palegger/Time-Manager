@@ -22,4 +22,6 @@ defmodule Todolist.Schema.Team do
     where: teams.id == ^teamID,
     select: teams.managerID
   end
+
+
 end

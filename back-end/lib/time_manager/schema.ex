@@ -316,6 +316,12 @@ defmodule Todolist.Schema do
     Workingtime.changeset(workingtime, attrs)
   end
 
+  def get_workingtime_userID(id) do
+    Workingtime
+    |> Workingtime.getuserID(id)
+    |> Repo.all()
+  end
+
   alias Todolist.Schema.Clock
 
   @doc """

@@ -31,4 +31,10 @@ defmodule Todolist.Schema.Teamuser do
   end
 
 
+  def getTeamID(query, userid) do
+    from teamusers in query,
+    where: teamusers.userID == ^userid,
+    select: teamusers.teamID
+  end
+
 end
