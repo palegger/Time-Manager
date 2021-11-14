@@ -21,7 +21,8 @@ defmodule TodolistWeb.TeamController do
       role == 1 || role == 2 ->
 
         with {:ok, %Team{} = _team} <- Schema.create_team(body) do
-          Plug.Conn.send_resp(conn, 201, "Team created")
+          put_resp_content_type(conn, "application/json")
+          Plug.Conn.send_resp(conn, 201, Jason.encode!(%{"message" => "Team created"}))
         end
       true ->
         Plug.Conn.send_resp(conn, 401, "")
